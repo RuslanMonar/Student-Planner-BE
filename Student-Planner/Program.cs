@@ -59,13 +59,13 @@ builder.Services.AddCors(Opt =>
 {
     Opt.AddPolicy("CorsPolicy", policy =>
     {
-        policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();//.WithOrigins("http://localhost:3000");
+        policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin().WithOrigins("http://localhost:3000");
     });
 });
 
 var app = builder.Build();
 
-
+app.UseCors("CorsPolicy");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
