@@ -22,6 +22,36 @@ namespace Application.Services.AuthService
             _config = config;
         }
 
+        public async Task<AuthResult> LoginAsync(string email, string password)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return new AuthResult
+                {
+                    Errors = new[] { "User does not exist" },
+                    Success = false
+                };
+            }
+
+            bool isPasswordValid = await _userManager.CheckPasswordAsync(user, password);
+
+            if (!isPasswordValid)
+            {
+                return new AuthResult
+                {
+                    Errors = new[] { "Password is wrong" },
+                    Success = false
+                };
+            }
+
+            return new AuthResult
+            {
+                Success = true,
+                Token = await CreateToken(user),
+            };
+        }
+
         public async Task<AuthResult> RegisterAsync(string email, string password, string username)
         {
             if (await _userManager.FindByEmailAsync(email) != null)
