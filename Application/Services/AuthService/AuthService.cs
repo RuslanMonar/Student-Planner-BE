@@ -66,7 +66,7 @@ namespace Application.Services.AuthService
             var newUser = new AppUser
             {
                 Email = email,
-                UserName = email
+                UserName = username
             };
 
             var createdUser = await _userManager.CreateAsync(newUser, password);
