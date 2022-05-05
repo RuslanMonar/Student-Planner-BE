@@ -33,6 +33,7 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddDbContext<InfrastructureContext>(options =>
                 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IInfrastructureContext>(provider => provider.GetRequiredService<InfrastructureContext>());
 
 builder.Services.AddIdentityCore<AppUser>()
                 .AddRoles<IdentityRole>()
@@ -53,6 +54,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
 
 
 builder.Services.AddCors(Opt =>
