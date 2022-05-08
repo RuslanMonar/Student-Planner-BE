@@ -1,4 +1,6 @@
-﻿namespace Domain
+﻿using System.Text.Json.Serialization;
+
+namespace Domain
 {
     public class Group
     {
@@ -6,7 +8,7 @@
         public Guid UserId { get; set; }
         public string Title { get; set; }
         public string Color { get; set; }
-
+        [JsonIgnore]
         public List<Project> Projects { get; set; }
     }
 }

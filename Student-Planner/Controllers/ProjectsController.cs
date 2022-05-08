@@ -1,10 +1,13 @@
 ﻿using Application.Services.AuthService.Interfaces;
+using Domain;
+using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Student_Planner.Dto;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+
 
 namespace Student_Planner.Controllers
 {
@@ -42,6 +45,27 @@ namespace Student_Planner.Controllers
         {
             await _project.AddProject(dto.Title, dto.Color, GetUserId(), dto.GroupId);
             return Ok();
+        }
+
+        [HttpGet("GetProjetcsByGroups")]
+        public async Task<ActionResult<IEnumerable<GroupViewModel>>> GetProjects()
+        {
+            var res = await _project.GetProjetcsByGroups(GetUserId());
+            return Ok(res);
+        }
+
+        [HttpGet("GetProjetcsWithoutGroup")]
+        public async Task<ActionResult<List<ProjectViewModel>>> GetProjetcsWithoutGroup()
+        {
+            var res = await _project.GetProjetcsWithoutGroup(GetUserId());
+            return Ok(res);
+        }
+
+        [HttpGet("GetGroups")]
+        public async Task<ActionResult<List<Group>>> GetGroups()
+        {
+            var res = await _project.GetGroups(GetUserId());
+            return Ok(res);
         }
     }
 }
