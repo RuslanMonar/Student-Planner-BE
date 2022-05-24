@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using Application.Services.AuthService.Dto;
+using Domain;
 using Domain.Models;
 
 namespace Application.Services.AuthService.Interfaces
@@ -11,5 +12,13 @@ namespace Application.Services.AuthService.Interfaces
         Task<IEnumerable<GroupViewModel>> GetProjetcsByGroups(Guid userId);
         Task<List<Group>> GetGroups(Guid userId);
         Task<List<ProjectViewModel>> GetProjetcsWithoutGroup(Guid userId);
+        Task<List<ProjectViewModel>> GetAllProjects(Guid userId);
+        Task AddTask(TaskDto dto, Guid userId);
+        Task<List<TasksViewModel>> GetAllTasks(Guid userId);
+        Task EditTask(AddTaskDto dto);
+        Task<List<TasksViewModel>> GetTasksById(Guid userId, int id);
+        Task StartTask(TrackTimeDto dto);
+        Task EndTask(TrackTimeDto dto);
+        Task<List<TasksStatisticViewModel>> GetTasksStatic(Guid userId);
     }
 }

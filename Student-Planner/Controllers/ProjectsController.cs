@@ -1,4 +1,5 @@
-﻿using Application.Services.AuthService.Interfaces;
+﻿using Application.Services.AuthService.Dto;
+using Application.Services.AuthService.Interfaces;
 using Domain;
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -27,7 +28,7 @@ namespace Student_Planner.Controllers
         {
             var accessToken = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", ""); 
             var handler = new JwtSecurityTokenHandler();
-            var token = handler.ReadJwtToken(accessToken);
+            var token = handler?.ReadJwtToken(accessToken);
             var userId = token.Claims.First(claim => claim.Type == "nameid").Value; 
             
             return new Guid(userId);
@@ -61,11 +62,69 @@ namespace Student_Planner.Controllers
             return Ok(res);
         }
 
+        [HttpGet("GetAllProjects")]
+        public async Task<ActionResult<List<ProjectViewModel>>> GetAllProjects()
+        {
+            var res = await _project.GetAllProjects(GetUserId());
+            return Ok(res);
+        }
+
+
         [HttpGet("GetGroups")]
         public async Task<ActionResult<List<Group>>> GetGroups()
         {
             var res = await _project.GetGroups(GetUserId());
             return Ok(res);
+        }
+
+        [HttpPost("AddTask")]
+        public async Task<ActionResult<List<Group>>> AddTask(TaskDto dto)
+        {
+            await _project.AddTask(dto, GetUserId());
+            return Ok();
+        }
+
+
+        [HttpGet("GetAllTasks")]
+        public async Task<ActionResult<List<TasksViewModel>>> GetAllTasks()
+        {
+           var result =  await _project.GetAllTasks(GetUserId());
+            return Ok(result);
+        }
+
+        [HttpGet("GetTasksById/{id}")]
+        public async Task<ActionResult<List<TasksViewModel>>> GetTasksById(int id)
+        {
+            var result = await _project.GetTasksById(GetUserId(), id);
+            return Ok(result);
+        }
+
+        [HttpPost("EditTask")]
+        public async Task<ActionResult> EditTask(AddTaskDto dto)
+        {
+            await _project.EditTask(dto);
+            return Ok();
+        }
+
+        [HttpPost("StartTask")]
+        public async Task<ActionResult> StartTask(TrackTimeDto dto)
+        {
+            await _project.StartTask(dto);
+            return Ok();
+        }
+
+        [HttpPost("EndTask")]
+        public async Task<ActionResult> EndTask(TrackTimeDto dto)
+        {
+            await _project.EndTask(dto);
+            return Ok();
+        }
+
+        [HttpGet("GetTasksStatic")]
+        public async Task<ActionResult<List<TasksStatisticViewModel>>> GetTasksStatic()
+        {
+            var result = await _project.GetTasksStatic(GetUserId());
+            return Ok(result);
         }
     }
 }

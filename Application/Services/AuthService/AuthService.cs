@@ -1,6 +1,7 @@
 ﻿using Application.Results;
 using Application.Services.AuthService.Interfaces;
 using Domain;
+using Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -14,12 +15,14 @@ namespace Application.Services.AuthService
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IConfiguration _config;
+        private readonly IInfrastructureContext _context;
 
 
-        public AuthService(UserManager<AppUser> userManager, IConfiguration config)
+        public AuthService(UserManager<AppUser> userManager, IConfiguration config, IInfrastructureContext context)
         {
             _userManager = userManager;
             _config = config;
+            _context = context;
         }
 
         public async Task<AuthResult> LoginAsync(string email, string password)
@@ -70,6 +73,7 @@ namespace Application.Services.AuthService
             };
 
             var createdUser = await _userManager.CreateAsync(newUser, password);
+
             if (!createdUser.Succeeded)
             {
                 return new AuthResult

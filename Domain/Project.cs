@@ -7,6 +7,7 @@
         public string Title { get; set; }
         public string Color { get; set; }
         public int? GroupdId { get; set; }
+        public bool isInitial { get; set; }
 
         public Group Group { get; set; }
         public List<Tasks> Tasks { get; set; }

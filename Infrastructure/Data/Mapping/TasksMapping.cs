@@ -12,6 +12,8 @@ namespace Infrastructure.Data.Mapping
             entity.HasOne(e => e.Project)
                  .WithMany(x => x.Tasks)
                  .HasForeignKey(e => e.ProjectId);
+
+            
         }
     }
 }

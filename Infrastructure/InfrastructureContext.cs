@@ -10,6 +10,7 @@ namespace Infrastructure
         public DbSet<Group> Groups { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Tasks> Tasks { get; set; }
+        public DbSet<TaskTrack> TasksTrack { get; set; }
 
         public InfrastructureContext(DbContextOptions<InfrastructureContext> options) : base(options)
         {
@@ -20,6 +21,7 @@ namespace Infrastructure
             modelBuilder.Entity<Group>(GroupMapping.Map);
             modelBuilder.Entity<Project>(ProjectMapping.Map);
             modelBuilder.Entity<Tasks>(TasksMapping.Map);
+            modelBuilder.Entity<TaskTrack>(TaskTrackMapping.Map);
 
             base.OnModelCreating(modelBuilder);
         }
