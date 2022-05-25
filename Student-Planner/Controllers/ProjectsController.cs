@@ -85,10 +85,10 @@ namespace Student_Planner.Controllers
         }
 
 
-        [HttpGet("GetAllTasks")]
-        public async Task<ActionResult<List<TasksViewModel>>> GetAllTasks()
+        [HttpPost("GetAllTasks")]
+        public async Task<ActionResult<List<TasksViewModel>>> GetAllTasks(GetAllTasksDto dto)
         {
-           var result =  await _project.GetAllTasks(GetUserId());
+           var result =  await _project.GetAllTasks(dto, GetUserId());
             return Ok(result);
         }
 
@@ -125,6 +125,19 @@ namespace Student_Planner.Controllers
         {
             var result = await _project.GetTasksStatic(GetUserId());
             return Ok(result);
+        }
+
+        [HttpPost("TaskCompleted")]
+        public async Task<ActionResult> TaskCompleted(TaskCompleteDto dto)
+        {
+            await _project.TaskCompleted(dto, GetUserId());
+            return Ok();
+        }
+        [HttpPost("DeleteTask")]
+        public async Task<ActionResult> DeleteTask(DeleteTaskDto dto)
+        {
+            await _project.DeleteTask(dto);
+            return Ok();
         }
     }
 }

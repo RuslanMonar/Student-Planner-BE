@@ -135,9 +135,9 @@ namespace Application.Services.AuthService
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<TasksViewModel>> GetAllTasks(Guid userId)
+        public async Task<List<TasksViewModel>> GetAllTasks(GetAllTasksDto dto, Guid userId)
         {
-            var res = await _context.Tasks.Where(x => x.UserId == userId).Select(x =>
+            var res = await _context.Tasks.Where(x => x.UserId == userId && x.Completed == dto.CompletedTasks).Select(x =>
             new TasksViewModel
             {
                 Id = x.Id,
@@ -251,6 +251,22 @@ namespace Application.Services.AuthService
             }).ToListAsync();
 
             return res;
+        }
+
+        public async Task TaskCompleted(TaskCompleteDto dto, Guid userId)
+        {
+            var task = _context.Tasks.FirstOrDefault(x => x.Id == dto.taskId);
+
+            task.Completed = dto.taskIsCompleted;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteTask(DeleteTaskDto dto)
+        {
+            var task = _context.Tasks.FirstOrDefault(x => x.Id == dto.TaskId);
+
+            _context.Tasks.Remove(task);
+            await _context.SaveChangesAsync();
         }
     }
 }
