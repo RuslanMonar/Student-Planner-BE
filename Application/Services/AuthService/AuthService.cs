@@ -61,7 +61,7 @@ namespace Application.Services.AuthService
             {
                 return new AuthResult
                 {
-                    Errors = new[] { "User with this email already exists" },
+                    Errors = new[] { "Користувач з такою поштою вже зареєстрований" },
                     Success = false
                 };
             }
