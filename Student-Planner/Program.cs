@@ -1,3 +1,4 @@
+using Application.Interfaces;
 using Application.Services.AuthService;
 using Application.Services.AuthService.Interfaces;
 using Domain;

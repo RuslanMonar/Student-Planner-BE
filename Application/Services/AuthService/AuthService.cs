@@ -1,7 +1,7 @@
-﻿using Application.Results;
+﻿using Application.Interfaces;
+using Application.Results;
 using Application.Services.AuthService.Interfaces;
 using Domain;
-using Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

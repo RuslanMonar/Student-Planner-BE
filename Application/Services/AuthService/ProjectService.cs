@@ -1,8 +1,8 @@
-﻿using Application.Services.AuthService.Dto;
+﻿using Application.Interfaces;
+using Application.Services.AuthService.Dto;
 using Application.Services.AuthService.Interfaces;
 using Domain;
 using Domain.Models;
-using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 

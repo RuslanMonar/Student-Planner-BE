@@ -1,7 +1,8 @@
 ﻿using Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure
+
+namespace Application.Interfaces
 {
     public interface IInfrastructureContext
     {
